@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /* eslint-disable react/no-unescaped-entities */
 export default function Home() {
   return (
@@ -42,12 +44,13 @@ export default function Home() {
             </nav>
           </div>
           <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
-            <a
-              href="#"
+            <Link
+              href="/member"
               className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
             >
               Member
-            </a>
+            </Link>
+            {/* <a href="/member">Member</a> */}
           </div>
         </div>
       </section>
