@@ -60,7 +60,7 @@ export const Login = ({
               <Button
                 type="submit"
                 className="w-full"
-                onClick={() => router.push("/dashboard")}
+                onClick={() => router.push("/home")}
               >
                 Login
               </Button>

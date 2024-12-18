@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { GalleryVerticalEnd } from "lucide-react";
 
@@ -14,6 +15,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 
 // This is sample data.
 const data = {
@@ -24,11 +26,11 @@ const data = {
       items: [
         {
           title: "Installation",
-          url: "#",
+          url: "/home",
         },
         {
           title: "Project Structure",
-          url: "#",
+          url: "/about",
         },
       ],
     },
@@ -157,6 +159,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = useRouter();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -181,17 +184,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
-                    {item.title}
-                  </a>
+                <SidebarMenuButton
+                  // asChild
+                  onClick={() => router.push(item.url)}
+                  className="font-medium"
+                >
+                  {item.title}
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub>
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
+                    {item.items.map((elm) => (
+                      <SidebarMenuSubItem key={elm.title}>
+                        <SidebarMenuSubButton
+                          // asChild
+                          isActive={elm.isActive}
+                          onClick={() => router.push(elm.url)}
+                        >
+                          {elm.title}
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
