@@ -12,13 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const Login = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) => {
-  // const router = useRouter();
+  const router = useRouter();
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -57,7 +57,11 @@ export const Login = ({
                   placeholder="Password"
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={() => router.push("/dashboard")}
+              >
                 Login
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
