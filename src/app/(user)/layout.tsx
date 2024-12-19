@@ -19,8 +19,6 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
@@ -65,14 +63,9 @@ export default function DashboardLayout({
                 </Avatar>
               </MenubarTrigger>
               <MenubarContent>
-                <MenubarItem>
-                  New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-                </MenubarItem>
-                <MenubarItem>New Window</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>Share</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>Print</MenubarItem>
+                <MenubarItem>Password</MenubarItem>
+                <MenubarItem>Setting</MenubarItem>
+                <MenubarItem>Logout</MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
