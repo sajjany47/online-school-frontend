@@ -13,6 +13,16 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
 export default function DashboardLayout({
   children,
@@ -23,7 +33,7 @@ export default function DashboardLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+        <header className="flex justify-between h-16 shrink-0 items-center gap-2 border-b mr-5 custom-menubar">
           <div className="flex items-center gap-2 px-3">
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -41,6 +51,31 @@ export default function DashboardLayout({
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+          <Menubar>
+            <MenubarMenu>
+              <small className="text-center">
+                <b>sajjany47</b>
+                <br />
+                <small>Admin</small>
+              </small>
+              <MenubarTrigger>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem>New Window</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Share</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Print</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <main>{children}</main>
