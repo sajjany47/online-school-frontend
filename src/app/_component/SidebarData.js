@@ -6,49 +6,90 @@ import {
   FileText,
   Briefcase,
   Settings,
+  Bot,
 } from "lucide-react";
 
 export const SideMenuData = {
   teacher: [
     {
       title: "Dashboard",
-      url: "/dashboard",
-      icon: <Home />,
+      icon: Home,
+      items: [{ title: "Dashboard", url: "/dashboard" }],
     },
     {
       title: "Classes",
-      url: "/classes",
-      icon: <BookOpen />,
+      icon: BookOpen,
+      items: [
+        {
+          title: "Class 1",
+          url: "/classes/class-1",
+        },
+        {
+          title: "Class 2",
+          url: "/classes/class-2",
+        },
+        {
+          title: "Class 3",
+          url: "/classes/class-3",
+        },
+      ],
     },
     {
       title: "Schedule",
-      url: "/schedule",
-      icon: <Calendar />,
+      icon: Calendar,
+      items: [{ title: "Schedule", url: "/schedule" }],
     },
     {
       title: "Students",
-      url: "/students",
-      icon: <Users />,
+      icon: Users,
+      items: [
+        {
+          title: "Student Records",
+          url: "/students/records",
+        },
+        {
+          title: "Attendance",
+          url: "/students/attendance",
+        },
+      ],
     },
     {
       title: "Assignments",
-      url: "/assignments",
-      icon: <FileText />,
+      icon: FileText,
+      items: [{ title: "Assignments", url: "/assignments" }],
     },
     {
-      title: "Exams",
-      url: "/exams",
-      icon: <Briefcase />,
+      title: "Exams & Results",
+      icon: Briefcase,
+      items: [
+        {
+          title: "Create Exam",
+          url: "/exams/create",
+        },
+        {
+          title: "Results",
+          url: "/exams/results",
+        },
+      ],
     },
     {
-      title: "Results",
-      url: "/results",
-      icon: <Briefcase />,
+      title: "AI Tools",
+      icon: Bot,
+      items: [
+        {
+          title: "AI Assistant",
+          url: "/ai/assistant",
+        },
+        {
+          title: "AI Grading",
+          url: "/ai/grading",
+        },
+      ],
     },
     {
       title: "Settings",
-      url: "/settings",
-      icon: <Settings />,
+      icon: Settings,
+      items: [{ title: "Settings", url: "/settings" }],
     },
   ],
 };
