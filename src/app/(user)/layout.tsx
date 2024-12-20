@@ -1,3 +1,4 @@
+"use client";
 import {
   SidebarInset,
   SidebarProvider,
@@ -21,12 +22,22 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  useEffect(() => {
+    const tokenVerified = true;
+    if (!tokenVerified) {
+      router.push("/member");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <SidebarProvider>
       <AppSidebar />
