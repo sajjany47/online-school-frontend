@@ -72,7 +72,7 @@ export const Login = ({
                     </span>
                   </div>
                   <div className="flex flex-col gap-4">
-                    <Button variant="outline" className="w-full">
+                    <Button className="w-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ export const Login = ({
                       </svg>
                       Login with Apple
                     </Button>
-                    <Button variant="outline" className="w-full">
+                    <Button className="w-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
