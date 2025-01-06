@@ -98,6 +98,33 @@ const userSchema = new mongoose.Schema(
       accountHolderName: String,
       uan: String,
     },
+    enrollmentDate: Date,
+    joiningDate: Date,
+    salary: Number,
+    courses: [
+      {
+        courseId: mongoose.Schema.Types.ObjectId,
+        startDate: Date,
+        endDate: Date,
+        fees: Number,
+        discount: Number,
+        isActive: Boolean,
+        createdBy: mongoose.Schema.Types.ObjectId,
+        updatedBy: mongoose.Schema.Types.ObjectId,
+      },
+    ],
+    parentDetails: {
+      fatherName: String,
+      motherName: String,
+      guardianPhoneNumber: String,
+      address: {
+        street: String,
+        city: Number,
+        state: Number,
+        zipCode: String,
+        country: Number,
+      },
+    },
     profilePicture: String,
     status: {
       type: String,
