@@ -100,7 +100,20 @@ const userSchema = new mongoose.Schema(
     },
     enrollmentDate: Date,
     joiningDate: Date,
-    salary: Number,
+    salary: {
+      basicSalary: Number,
+      houseRentAllowance: Number,
+      medicalAllowance: Number,
+      transportAllowance: Number,
+      specialAllowance: Number,
+      otherAllowances: Number,
+      providentFund: Number,
+      incomeTax: Number,
+      professionalTax: Number,
+      otherDeductions: Number,
+      grossSalary: Number,
+      netSalary: Number,
+    },
     courses: [
       {
         courseId: mongoose.Schema.Types.ObjectId,
