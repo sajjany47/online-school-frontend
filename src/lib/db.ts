@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const url = process.env.MONGODB_URI;
 
-const connect = async () => {
+const dbConnect = async () => {
   const connectionState = mongoose.connection.readyState;
   if (connectionState === 1) {
     console.log("Already connected to MongoDB");
@@ -28,4 +28,4 @@ const connect = async () => {
   }
 };
 
-export default connect;
+export default dbConnect;
