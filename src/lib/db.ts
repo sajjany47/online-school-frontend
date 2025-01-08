@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 
-const url = process.env.MONGODB_URI;
+const url = process.env.MONGODB_URL;
 
 const dbConnect = async () => {
   const connectionState = mongoose.connection.readyState;
@@ -19,11 +19,11 @@ const dbConnect = async () => {
   try {
     mongoose.connect(url!, {
       dbName: process.env.MONGODB_DB,
-      bufferCommands: true,
+      bufferCommands: false,
     });
     console.log("Connected to MongoDB");
   } catch (error: any) {
-    console.log("Error connecting to MongoDB:", error);
+    // console.log("Error connecting to MongoDB:", error);
     throw new Error("Error connecting to MongoDB", error);
   }
 };

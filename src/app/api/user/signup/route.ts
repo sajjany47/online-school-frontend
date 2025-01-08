@@ -1,12 +1,15 @@
 import dbConnect from "@/lib/db";
+import { NextResponse, NextRequest } from "next/server";
 
-export const POST = async (request: Request) => {
+export const POST = async (req: NextRequest) => {
   await dbConnect();
 
   try {
-    const reqData = request.json();
+    const reqData = await req.json();
     console.log(reqData);
+
+    return NextResponse.json({ success: true, data: reqData }, { status: 200 });
   } catch (error) {
-    return Response.json({ success: false, error: error }, { status: 500 });
+    return NextResponse.json({ success: false, error: error }, { status: 500 });
   }
 };
