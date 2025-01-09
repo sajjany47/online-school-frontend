@@ -33,11 +33,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["OWNED", "RENTED", "OTHER"],
     },
-    subjects: [String],
+
     experience: {
       years: Number,
       details: [
         {
+          _id: mongoose.Schema.Types.ObjectId,
           organizationName: { type: String },
           position: { type: String },
           startingYear: { type: String, trim: true },
@@ -63,6 +64,7 @@ const userSchema = new mongoose.Schema(
     },
     certifications: [
       {
+        _id: mongoose.Schema.Types.ObjectId,
         boardName: { type: String },
         passingYear: { type: String, trim: true },
         marksPercentage: { type: String, trim: true },
@@ -76,20 +78,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["Full-time", "Part-time", "Contract"],
     },
-    documents: {
-      name: String,
-      number: String,
-      documentName: {
-        type: String,
-        enum: [
-          "Passport",
-          "Aadhar Card",
-          "Driving Licence",
-          "National Card",
-          "Voter Card",
-        ],
+
+    documentProof: [
+      {
+        documentName: String,
+        documnetNumber: String,
+        documentId: mongoose.Schema.Types.ObjectId,
+        _id: mongoose.Schema.Types.ObjectId,
       },
-    },
+    ],
     accountDetails: {
       bankName: String,
       accountNumber: String,
@@ -98,7 +95,17 @@ const userSchema = new mongoose.Schema(
       accountHolderName: String,
       uan: String,
     },
-    enrollmentDate: Date,
+    profilePicture: String,
+    status: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      enum: ["PENDING", "VERIFIED", "REJECTED"],
+      default: "PENDING",
+    },
+    isActive: Boolean,
+    createdBy: mongoose.Schema.Types.ObjectId,
+    updatedBy: mongoose.Schema.Types.ObjectId,
     joiningDate: Date,
     salary: {
       basicSalary: Number,
@@ -126,6 +133,7 @@ const userSchema = new mongoose.Schema(
         updatedBy: mongoose.Schema.Types.ObjectId,
       },
     ],
+    enrollmentDate: Date,
     parentDetails: {
       fatherName: String,
       motherName: String,
@@ -138,17 +146,7 @@ const userSchema = new mongoose.Schema(
         country: Number,
       },
     },
-    profilePicture: String,
-    status: {
-      type: String,
-      trim: true,
-      lowercase: true,
-      enum: ["PENDING", "VERIFIED", "REJECTED"],
-      default: "PENDING",
-    },
-    isActive: Boolean,
-    createdBy: mongoose.Schema.Types.ObjectId,
-    updatedBy: mongoose.Schema.Types.ObjectId,
+    subjects: [String],
   },
   {
     timestamps: true,
