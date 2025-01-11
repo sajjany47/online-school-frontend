@@ -1,3 +1,4 @@
+import Config from "@/shared/Config";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -11,7 +12,13 @@ const userSchema = new mongoose.Schema(
     dob: Date,
     position: {
       type: String,
-      enum: ["Teacher", "Student", "Employee", "Finance", "Admin"],
+      enum: [
+        Config.Position.Teacher,
+        Config.Position.Student,
+        Config.Position.Employee,
+        Config.Position.Finance,
+        Config.Position.Admin,
+      ],
       required: true,
     },
     permanentAddress: {
@@ -31,7 +38,11 @@ const userSchema = new mongoose.Schema(
     },
     residenceType: {
       type: String,
-      enum: ["OWNED", "RENTED", "OTHER"],
+      enum: [
+        Config.ResidenceType.Owned,
+        Config.ResidenceType.Rented,
+        Config.ResidenceType.Other,
+      ],
     },
 
     experience: {
@@ -76,7 +87,11 @@ const userSchema = new mongoose.Schema(
     ],
     employmentType: {
       type: String,
-      enum: ["Full-time", "Part-time", "Contract"],
+      enum: [
+        Config.EmploymentType.FullTime,
+        Config.EmploymentType.PartTime,
+        Config.EmploymentType.Contract,
+      ],
     },
 
     documentProof: [
@@ -100,27 +115,37 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
-      enum: ["PENDING", "VERIFIED", "REJECTED"],
-      default: "PENDING",
+      enum: [
+        Config.Status.PENDING,
+        Config.Status.VERIFIED,
+        Config.Status.REJECTED,
+      ],
+      default: Config.Status.PENDING,
     },
     isActive: Boolean,
     createdBy: mongoose.Schema.Types.ObjectId,
     updatedBy: mongoose.Schema.Types.ObjectId,
     joiningDate: Date,
-    salary: {
-      basicSalary: Number,
-      houseRentAllowance: Number,
-      medicalAllowance: Number,
-      transportAllowance: Number,
-      specialAllowance: Number,
-      otherAllowances: Number,
-      providentFund: Number,
-      incomeTax: Number,
-      professionalTax: Number,
-      otherDeductions: Number,
-      grossSalary: Number,
-      netSalary: Number,
-    },
+    depositAmount: Number,
+    salary: [
+      {
+        basicSalary: Number,
+        houseRentAllowance: Number,
+        medicalAllowance: Number,
+        transportAllowance: Number,
+        specialAllowance: Number,
+        otherAllowances: Number,
+        providentFund: Number,
+        incomeTax: Number,
+        professionalTax: Number,
+        otherDeductions: Number,
+        grossSalary: Number,
+        netSalary: Number,
+        createdBy: mongoose.Schema.Types.ObjectId,
+        updatedBy: mongoose.Schema.Types.ObjectId,
+        isActive: Boolean,
+      },
+    ],
     courses: [
       {
         courseId: mongoose.Schema.Types.ObjectId,
@@ -146,7 +171,7 @@ const userSchema = new mongoose.Schema(
         country: Number,
       },
     },
-    subjects: [String],
+    subjects: [mongoose.Schema.Types.ObjectId],
   },
   {
     timestamps: true,

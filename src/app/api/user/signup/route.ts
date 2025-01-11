@@ -4,6 +4,8 @@ import User from "@/modal/User.Model";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import { NewUser } from "@/types/UserType";
+import Config from "@/shared/Config";
 
 export const POST = async (req: NextRequest) => {
   await dbConnect();
@@ -17,7 +19,7 @@ export const POST = async (req: NextRequest) => {
         { status: 400 }
       );
     } else {
-      let newUser: any = {
+      const newUser: NewUser = {
         uniqueId: GenerateEmployeeId(),
         name: reqData.name,
         username: reqData.username,
@@ -42,12 +44,6 @@ export const POST = async (req: NextRequest) => {
           country: Number(reqData.residenceAddress.city),
         },
         residenceType: reqData.residenceType,
-        experience: {
-          years: Number(reqData.experience.years ?? 0),
-          details: reqData.experience.details ?? [],
-        },
-        certifications: reqData.certifications ?? [],
-        employmentType: reqData.employmentType,
         documentProof: reqData.documentProof ?? [],
         accountDetails: {
           bankName: reqData.accountDetails.bankName,
@@ -55,16 +51,48 @@ export const POST = async (req: NextRequest) => {
           ifscCode: reqData.accountDetails.ifscCode,
           branchName: reqData.accountDetails.branchName,
           accountHolderName: reqData.accountDetails.accountHolderName,
-          uan: reqData.accountDetails.uan,
+          uan: reqData.accountDetails.uan ?? null,
         },
         joiningDate: new Date(reqData.joiningDate),
         profilePicture: reqData.profilePicture ?? null,
-        status: reqData.status ?? "PENDING",
+        status: reqData.status ?? Config.Status.PENDING,
         isActive: reqData.isActive ?? true,
         createdBy: reqData.user ? reqData.user._id : null,
         updatedBy: reqData.user ? reqData.user._id : null,
       };
-      if (reqData.position === "Student") {
+      if (
+        reqData.position === Config.Position.Teacher ||
+        reqData.position === Config.Position.Employee ||
+        reqData.position === Config.Position.Finance ||
+        reqData.position === Config.Position.Admin
+      ) {
+        newUser.experience = {
+          years: Number(reqData.experience.years ?? 0),
+          details: reqData.experience.details ?? [],
+        };
+        newUser.certifications = reqData.certifications ?? [];
+        newUser.employmentType = reqData.employmentType;
+        newUser.salary = [
+          {
+            basicSalary: Number(reqData.salary.basicSalary),
+            houseRentAllowance: Number(reqData.salary.houseRentAllowance),
+            medicalAllowance: Number(reqData.salary.medicalAllowance),
+            transportAllowance: Number(reqData.salary.transportAllowance),
+            specialAllowance: Number(reqData.salary.specialAllowance),
+            otherAllowances: Number(reqData.salary.otherAllowances),
+            providentFund: Number(reqData.salary.providentFund),
+            incomeTax: Number(reqData.salary.incomeTax),
+            professionalTax: Number(reqData.salary.professionalTax),
+            otherDeductions: Number(reqData.salary.otherDeductions),
+            grossSalary: Number(reqData.salary.grossSalary),
+            netSalary: Number(reqData.salary.netSalary),
+            createdBy: reqData.user ? reqData.user._id : null,
+            updatedBy: reqData.user ? reqData.user._id : null,
+            isActive: true,
+          },
+        ];
+      }
+      if (reqData.position === Config.Position.Student) {
         newUser.courses = [
           {
             _id: new mongoose.Types.ObjectId(),
@@ -78,9 +106,31 @@ export const POST = async (req: NextRequest) => {
             updatedBy: reqData.user ? reqData.user._id : null,
           },
         ];
+        newUser.enrollmentDate = new Date(reqData.enrollmentDate);
+        newUser.parentDetails = {
+          fatherName: reqData.parentDetails.fatherName,
+          motherName: reqData.parentDetails.motherName,
+          guardianPhoneNumber: reqData.parentDetails.guardianPhoneNumber,
+          address: {
+            street: reqData.parentDetails.address.street,
+            city: Number(reqData.parentDetails.address.city),
+            state: Number(reqData.parentDetails.address.state),
+            zipCode: reqData.parentDetails.address.zipCode,
+            country: Number(reqData.parentDetails.address.country),
+          },
+        };
+        newUser.subjects = reqData.subjects.map(
+          (item: string) => new mongoose.Types.ObjectId(item)
+        );
+        newUser.depositAmount = Number(reqData.depositAmount);
       }
+
+      const prepareData = new User(newUser);
+
+      await prepareData.save();
+
       return NextResponse.json(
-        { success: true, data: reqData },
+        { success: true, data: prepareData },
         { status: 200 }
       );
     }
