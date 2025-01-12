@@ -114,7 +114,6 @@ const userSchema = new mongoose.Schema(
     status: {
       type: String,
       trim: true,
-      lowercase: true,
       enum: [
         Config.Status.PENDING,
         Config.Status.VERIFIED,

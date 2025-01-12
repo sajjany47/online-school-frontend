@@ -18,8 +18,8 @@ const dbConnect = async () => {
 
   try {
     mongoose.connect(url!, {
-      dbName: process.env.MONGODB_DB,
-      bufferCommands: false,
+      // dbName: process.env.MONGODB_DB,
+      bufferCommands: true,
     });
     console.log("Connected to MongoDB");
   } catch (error: any) {
