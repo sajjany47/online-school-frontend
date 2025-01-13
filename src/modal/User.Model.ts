@@ -121,6 +121,7 @@ const userSchema = new mongoose.Schema(
       ],
       default: Config.Status.PENDING,
     },
+    sessionId: { type: String || null, default: null },
     isActive: Boolean,
     createdBy: mongoose.Schema.Types.ObjectId,
     updatedBy: mongoose.Schema.Types.ObjectId,
