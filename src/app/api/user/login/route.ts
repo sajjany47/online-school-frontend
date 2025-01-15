@@ -5,13 +5,16 @@ import { NextResponse, NextRequest } from "next/server";
 import { nanoid } from "nanoid";
 import { GenerateAccessToken, GenerateRefreshToken } from "@/shared/Constant";
 import mongoose from "mongoose";
+import { NewUser } from "@/types/UserType";
 
 export const POST = async (req: NextRequest) => {
   await dbConnect();
 
   try {
     const reqData = await req.json();
-    const checkUser: any = await User.findOne({ username: reqData.username });
+    const checkUser: NewUser | null = await User.findOne({
+      username: reqData.username,
+    });
     if (!checkUser) {
       return NextResponse.json(
         { success: false, error: "User not found!" },
@@ -37,7 +40,7 @@ export const POST = async (req: NextRequest) => {
       if (verifyPassword) {
         const sessionID = nanoid();
         const data = {
-          _id: checkUser._id,
+          _id: checkUser._id.toString(),
           username: checkUser.username,
           name: checkUser.name,
           position: checkUser.position,

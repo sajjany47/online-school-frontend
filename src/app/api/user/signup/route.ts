@@ -20,6 +20,7 @@ export const POST = async (req: NextRequest) => {
       );
     } else {
       const newUser: NewUser = {
+        _id: new mongoose.Types.ObjectId(),
         uniqueId: GenerateEmployeeId(),
         name: reqData.name,
         username: reqData.username,

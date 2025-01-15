@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 export interface NewUser {
+  _id: Types.ObjectId;
   uniqueId: string;
   name: string;
   username: string;
@@ -44,6 +45,7 @@ export interface NewUser {
     years: number;
     details: string[];
   };
+  userImage?: string | null;
   certifications?: string[];
   employmentType?: string;
   salary?: {
