@@ -2,7 +2,7 @@ import dbConnect from "@/lib/db";
 import { VerifyToken } from "@/shared/Constant";
 import { NextResponse, NextRequest } from "next/server";
 
-export const AuthMiddleware = async (req: NextRequest) => {
+const AuthMiddleware = async (req: NextRequest) => {
   await dbConnect();
   try {
     const reqData = await req.json();
@@ -26,7 +26,4 @@ export const AuthMiddleware = async (req: NextRequest) => {
     );
   }
 };
-
-export const config = {
-  matcher: "/api/user/:id",
-};
+export default AuthMiddleware;
