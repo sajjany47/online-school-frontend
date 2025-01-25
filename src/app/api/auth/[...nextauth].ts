@@ -1,9 +1,10 @@
-import { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import dbConnect from "@/lib/db";
-import User from "@/modal/User.Model";
 import { NewUser } from "@/types/UserType";
+import User from "@/modal/User.Model";
+import bcrypt from "bcrypt";
 import { SecretKey } from "@/shared/Constant";
 
 export const authOptions: NextAuthOptions = {
@@ -72,11 +73,11 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
-  pages: {
-    signIn: "/sign-in",
-  },
+
   session: {
     strategy: "jwt",
   },
   secret: SecretKey,
 };
+
+export default NextAuth(authOptions);
