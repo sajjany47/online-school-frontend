@@ -6,11 +6,12 @@ import { SecretKey } from "./shared/Constant";
 const SECRET_KEY = SecretKey;
 
 // Paths that require token validation
-const protectedPaths = [];
+const protectedPaths = ["/api/user/:id"];
 
 export async function middleware(req: NextRequest) {
   if (protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
     const token = await getToken({ req, secret: SECRET_KEY });
+    console.log("Token:", token); // Debugging line
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -18,3 +19,7 @@ export async function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/api/user/:id"],
+};
