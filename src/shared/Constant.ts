@@ -15,6 +15,13 @@ export interface TokenData {
   sessionId: string;
 }
 
+export const ACCESS_TOKEN_STORAGE_KEY = "accessToken";
+export const REFRESH_TOKEN_STORAGE_KEY = "refreshToken";
+
+export const getAccessToken = () => {
+  return sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+};
+
 export const GenerateAccessToken = (data: TokenData) => {
   const a = {
     _id: data._id,
@@ -79,4 +86,31 @@ export const VerifyToken = async (token: string) => {
   } catch {
     throw new Error("Invalid or expired token");
   }
+};
+
+export const headerWithToken = () => {
+  const token = getAccessToken();
+
+  return {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};
+export const headerWithOutToken = () => {
+  return {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+};
+export const headerWithFormData = () => {
+  const token = getAccessToken();
+  return {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
