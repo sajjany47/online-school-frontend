@@ -13,10 +13,17 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Field, Form, Formik } from "formik";
 import { InputField } from "./CustomField";
+import * as Yup from "yup";
+
 interface LoginValues {
   username: string;
   password: string;
 }
+
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required"),
+});
 export const Login = ({
   className,
   ...props
@@ -31,6 +38,7 @@ export const Login = ({
     <Formik
       initialValues={{ username: "", password: "" }}
       onSubmit={handelLogin}
+      validationSchema={validationSchema}
       enableReinitialize
     >
       {({ handleSubmit }) => (
