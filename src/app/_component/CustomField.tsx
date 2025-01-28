@@ -16,23 +16,17 @@ export const InputField = ({
   form: { touched, errors },
   ...props
 }: InputFieldProps) => {
-  const error = getIn(errors, field.name);
-  const isTouched = getIn(touched, field.name);
-
   return (
-    <div className={`form-control ${props.className ? props.className : ""}`}>
-      {props.label && <Label htmlFor={props.name}>{props.label}</Label>}
+    <div className="grid gap-2">
+      <Label htmlFor={field.name}>{props.label}</Label>
       <Input
-        id={props.name}
-        placeholder={props.label}
+        id={field.name}
         {...field}
         {...props}
-        className={`mt-1 ${
-          error && isTouched ? "border-red-500 focus:border-red-500" : ""
-        }`}
+        value={field.value ? field.value : ""}
       />
-      {error && isTouched && (
-        <small className="text-red-600 text-sm">{error}</small>
+      {Boolean(getIn(errors, field.name)) && getIn(touched, field.name) && (
+        <small className="text-danger">{getIn(errors, field.name)}</small>
       )}
     </div>
   );
