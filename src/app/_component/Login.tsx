@@ -13,19 +13,27 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Field, Form, Formik } from "formik";
 import { InputField } from "./CustomField";
-
+interface LoginValues {
+  username: string;
+  password: string;
+}
 export const Login = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) => {
   const router = useRouter();
+
+  const handelLogin = (values: LoginValues) => {
+    console.log(values);
+    router.push("/home");
+  };
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
-      onSubmit={() => console.log("Sajjan")}
+      onSubmit={handelLogin}
       enableReinitialize
     >
-      {({ handleSubmit, values }) => (
+      {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit} autoComplete="off">
           <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
             <div className="flex w-full max-w-sm flex-col gap-6">
@@ -59,11 +67,7 @@ export const Login = ({
                         Forgot your password?
                       </a>
 
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        onClick={() => router.push("/home")}
-                      >
+                      <Button type="submit" className="w-full">
                         Login
                       </Button>
                       <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
