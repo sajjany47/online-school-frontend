@@ -23,10 +23,15 @@ export const InputField = ({
         id={field.name}
         {...field}
         {...props}
+        className={`border rounded px-2 py-1 ${
+          Boolean(getIn(errors, field.name)) &&
+          getIn(touched, field.name) &&
+          "border-red-500"
+        }`}
         value={field.value ? field.value : ""}
       />
       {Boolean(getIn(errors, field.name)) && getIn(touched, field.name) && (
-        <small className="text-danger">{getIn(errors, field.name)}</small>
+        <small className="text-red-500">{getIn(errors, field.name)}</small>
       )}
     </div>
   );

@@ -14,6 +14,10 @@ import { useRouter } from "next/navigation";
 import { Field, Form, Formik } from "formik";
 import { InputField } from "./CustomField";
 import * as Yup from "yup";
+import { userLogin } from "@/service/UserService";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/reducer/UserReducer";
+import { toast } from "react-toastify";
 
 interface LoginValues {
   username: string;
@@ -29,10 +33,31 @@ export const Login = ({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handelLogin = (values: LoginValues) => {
-    console.log(values);
-    router.push("/home");
+    userLogin(values)
+      .then((res) => {
+        dispatch(
+          setUser({
+            data: res.data,
+            acccessToken: res.token.accessToken,
+            refreshToken: res.token.refreshToken,
+          })
+        );
+        router.push("/home");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error ?? err.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      });
   };
   return (
     <Formik
