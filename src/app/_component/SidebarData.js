@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 export const SideMenuData = {
-  teacher: [
+  Teacher: [
     {
       title: "Dashboard",
       icon: Home,
@@ -70,7 +70,7 @@ export const SideMenuData = {
       items: [{ title: "Settings", url: "/settings" }],
     },
   ],
-  student: [
+  Student: [
     {
       title: "Dashboard",
       icon: Home,
@@ -97,7 +97,7 @@ export const SideMenuData = {
       items: [{ title: "Settings", url: "/settings" }],
     },
   ],
-  finance: [
+  Finance: [
     {
       title: "Dashboard",
       icon: Home,
@@ -125,7 +125,7 @@ export const SideMenuData = {
       items: [{ title: "Finance Reports", url: "/finance/reports" }],
     },
   ],
-  employee: [
+  Employee: [
     {
       title: "Dashboard",
       icon: Home,
@@ -147,7 +147,7 @@ export const SideMenuData = {
       items: [{ title: "Settings", url: "/settings" }],
     },
   ],
-  admin: [
+  Admin: [
     {
       title: "Dashboard",
       icon: Home,

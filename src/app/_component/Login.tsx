@@ -40,9 +40,9 @@ export const Login = ({
       .then((res) => {
         dispatch(
           setUser({
-            data: res.data,
-            acccessToken: res.token.accessToken,
-            refreshToken: res.token.refreshToken,
+            data: res.data.data,
+            acccessToken: res.data.token.accessToken,
+            refreshToken: res.data.token.refreshToken,
           })
         );
         router.push("/home");

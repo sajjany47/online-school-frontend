@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/menubar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export default function DashboardLayout({
   children,
@@ -31,6 +32,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const router = useRouter();
+
+  const userData = useSelector((state: any) => state.user.user);
+
   useEffect(() => {
     const tokenVerified = true;
     if (!tokenVerified) {
@@ -63,9 +67,9 @@ export default function DashboardLayout({
           <Menubar>
             <MenubarMenu>
               <small className="text-center">
-                <b>sajjany47</b>
+                <b>{userData.data.username}</b>
                 <br />
-                <small>Admin</small>
+                <small>{userData.data.position}</small>
               </small>
               <MenubarTrigger>
                 <Avatar>

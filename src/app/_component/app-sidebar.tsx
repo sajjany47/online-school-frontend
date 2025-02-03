@@ -22,9 +22,24 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { SideMenuData } from "../_component/SidebarData";
+import { useSelector } from "react-redux";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
+  const userData = useSelector((state: any) => state.user.user);
+
+  const SidebarList =
+    userData.data.position === "Teacher"
+      ? SideMenuData.Teacher
+      : userData.data.position === "Admin"
+      ? SideMenuData.Admin
+      : userData.data.position === "Finance"
+      ? SideMenuData.Finance
+      : userData.data.position === "Student"
+      ? SideMenuData.Student
+      : userData.data.position === "Employee"
+      ? SideMenuData.Employee
+      : [];
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -47,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {SideMenuData.teacher.map((item) => (
+            {SidebarList.map((item: any) => (
               <Collapsible
                 key={item.title}
                 asChild
@@ -63,7 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {item.items?.map((subItem) => (
+                      {item.items?.map((subItem: any) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton
                             // asChild
