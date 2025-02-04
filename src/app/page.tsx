@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+// import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 /* eslint-disable react/no-unescaped-entities */
@@ -105,7 +106,7 @@ export default function Home() {
             </div>
             <div className="w-full md:w-1/2">
               <div className="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-                <Image
+                <img
                   src="https://images.unsplash.com/photo-1498049860654-af1a5c566876?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                   alt="Sample Image"
                   width={1050}
@@ -121,7 +122,7 @@ export default function Home() {
         <div className="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
           {/* Image */}
           <div className="box-border relative w-full max-w-md px-4 mt-5 mb-4 -ml-5 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2 xl:pl-10">
-            <Image
+            <img
               src="https://cdn.devdojo.com/images/december2020/productivity.png"
               alt="Productivity"
               className="p-2 pl-6 pr-5 xl:pl-16 xl:pr-20"
@@ -195,7 +196,7 @@ export default function Home() {
           {/* End  Content */}
           {/* Image */}
           <div className="box-border relative w-full max-w-md px-4 mt-10 mb-4 text-center bg-no-repeat bg-contain border-solid md:mt-0 md:max-w-none lg:mb-0 md:w-1/2">
-            <Image
+            <img
               src="https://cdn.devdojo.com/images/december2020/settings.png"
               alt="Settings"
               className="pl-4 sm:pr-10 xl:pl-10 lg:pr-32"
@@ -280,7 +281,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full px-3 mb-12 lg:w-1/2 order-0 lg:order-1 lg:mb-0">
-              <Image
+              <img
                 className="mx-auto sm:max-w-sm lg:max-w-full"
                 src="https://cdn.devdojo.com/images/november2020/feature-graphic.png"
                 alt="feature image"
@@ -314,11 +315,9 @@ export default function Home() {
               <div className="flex flex-col items-start justify-start w-full h-auto mb-12 lg:w-1/3 lg:mb-0">
                 <div className="flex items-center justify-center">
                   <div className="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                    <Image
+                    <img
                       src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1700&q=80"
                       alt="John Doe"
-                      layout="fill"
-                      objectFit="cover"
                     />
                   </div>
                   <div className="flex flex-col items-start justify-center">
@@ -335,11 +334,9 @@ export default function Home() {
               <div className="flex flex-col items-start justify-start w-full h-auto px-0 mx-0 mb-12 border-l border-r border-transparent lg:w-1/3 lg:mb-0 lg:px-8 lg:mx-8 lg:border-gray-200">
                 <div className="flex items-center justify-center">
                   <div className="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                    <Image
+                    <img
                       src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2547&q=80"
                       alt="Jane Doe"
-                      layout="fill"
-                      objectFit="cover"
                     />
                   </div>
                   <div className="flex flex-col items-start justify-center">
@@ -355,11 +352,9 @@ export default function Home() {
               <div className="flex flex-col items-start justify-start w-full h-auto lg:w-1/3">
                 <div className="flex items-center justify-center">
                   <div className="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full">
-                    <Image
+                    <img
                       src="https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1256&q=80"
                       alt="John Smith"
-                      layout="fill"
-                      objectFit="cover"
                     />
                   </div>
                   <div className="flex flex-col items-start justify-center">
