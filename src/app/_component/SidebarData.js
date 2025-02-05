@@ -5,13 +5,13 @@ import {
   Users,
   FileText,
   Briefcase,
-  Bot,
   Settings,
   DollarSign,
   UserCheck,
   Clipboard,
   Globe,
   ShieldCheck,
+  Info,
 } from "lucide-react";
 
 export const SideMenuData = {
@@ -57,12 +57,9 @@ export const SideMenuData = {
       ],
     },
     {
-      title: "AI Tools",
-      icon: Bot,
-      items: [
-        { title: "AI Assistant", url: "/ai/assistant" },
-        { title: "AI Grading", url: "/ai/grading" },
-      ],
+      title: "Info",
+      icon: Info,
+      items: [{ title: "Personal Details", url: "/personal-info" }],
     },
     {
       title: "Settings",
@@ -90,6 +87,11 @@ export const SideMenuData = {
       title: "Exams & Results",
       icon: Briefcase,
       items: [{ title: "Results", url: "/results" }],
+    },
+    {
+      title: "Info",
+      icon: Info,
+      items: [{ title: "Personal Details", url: "/personal-info" }],
     },
     {
       title: "Settings",
@@ -124,6 +126,11 @@ export const SideMenuData = {
       icon: Briefcase,
       items: [{ title: "Finance Reports", url: "/finance/reports" }],
     },
+    {
+      title: "Info",
+      icon: Info,
+      items: [{ title: "Personal Details", url: "/personal-info" }],
+    },
   ],
   Employee: [
     {
@@ -145,6 +152,11 @@ export const SideMenuData = {
       title: "Settings",
       icon: Settings,
       items: [{ title: "Settings", url: "/settings" }],
+    },
+    {
+      title: "Info",
+      icon: Info,
+      items: [{ title: "Personal Details", url: "/personal-info" }],
     },
   ],
   Admin: [
@@ -171,6 +183,11 @@ export const SideMenuData = {
       title: "Security",
       icon: ShieldCheck,
       items: [{ title: "Roles & Permissions", url: "/settings/security" }],
+    },
+    {
+      title: "Info",
+      icon: Info,
+      items: [{ title: "Personal Details", url: "/personal-info" }],
     },
   ],
 };

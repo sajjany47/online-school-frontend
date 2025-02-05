@@ -79,8 +79,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       {item.items?.map((subItem: any) => (
-                        <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubItem
+                          key={subItem.title}
+                          style={{ cursor: "pointer" }}
+                        >
                           <SidebarMenuSubButton
+                            style={{ cursor: "pointer" }}
                             // asChild
                             onClick={() => router.push(subItem.url)}
                           >
