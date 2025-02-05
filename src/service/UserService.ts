@@ -1,7 +1,7 @@
 import { headerWithOutToken, headerWithToken } from "@/shared/Constant";
 import axios from "axios";
 
-export const userCreate = async (payload) => {
+export const userCreate = async (payload: any) => {
   const response = await axios.post(
     `/api/user/signup`,
     payload,
@@ -10,7 +10,7 @@ export const userCreate = async (payload) => {
   return response.data;
 };
 
-export const userLogin = async (payload) => {
+export const userLogin = async (payload: any) => {
   const response = await axios.post(
     `/api/user/login`,
     payload,
@@ -19,7 +19,7 @@ export const userLogin = async (payload) => {
   return response.data;
 };
 
-export const userDetails = async (payload) => {
+export const userDetails = async (payload: any) => {
   const response = await axios.post(
     `/api/user/:id`,
     payload,

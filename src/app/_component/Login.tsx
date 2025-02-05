@@ -38,6 +38,8 @@ export const Login = ({
   const handelLogin = (values: LoginValues) => {
     userLogin(values)
       .then((res) => {
+        localStorage.setItem("accessToken", res.data.token.accessToken);
+        localStorage.setItem("refreshToken", res.data.token.refreshToken);
         dispatch(
           setUser({
             data: res.data.data,

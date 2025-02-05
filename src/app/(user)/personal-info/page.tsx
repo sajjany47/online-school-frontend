@@ -1,6 +1,21 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { userDetails } from "@/service/UserService";
+import { useSelector } from "react-redux";
+import { ErrorToast } from "@/app/_component/Toast";
 
-const page = () => {
+const PersonalInfo = () => {
+  const user = useSelector((state: any) => state.user.user);
+  useEffect(() => {
+    userDetails(user._id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        ErrorToast(err.response.data.error ?? err.message);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="bg-gray-100">
       <div className="container mx-auto py-8">
@@ -197,4 +212,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PersonalInfo;
