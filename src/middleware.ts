@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { SecretKey } from "./shared/Constant";
 
 const SECRET_KEY = SecretKey;
 
 // Paths that require token validation
-const protectedPaths = ["/api/user/:id"];
+const protectedPaths = ["/api/user/:path*"];
 
 export async function middleware(req: NextRequest) {
   if (protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
@@ -21,5 +21,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/user/:id"],
+  matcher: ["/api/user/:path*"],
 };
