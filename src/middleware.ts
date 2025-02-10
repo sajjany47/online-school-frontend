@@ -1,25 +1,26 @@
-import { getToken } from "next-auth/jwt";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import { SecretKey } from "./shared/Constant";
+import { NextRequest, NextResponse } from "next/server";
+import { VerifyToken } from "./shared/Constant";
 
-const SECRET_KEY = SecretKey;
+export function middleware(req: NextRequest) {
+  const token =
+    req.cookies.get("token")?.value ||
+    req.headers.get("Authorization")?.split(" ")[1];
 
-// Paths that require token validation
-const protectedPaths = ["/api/user/:path*"];
-
-export async function middleware(req: NextRequest) {
-  if (protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
-    const token = await getToken({ req, secret: SECRET_KEY });
-    console.log("Token:", token); // Debugging line
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  if (!token) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
+  const decoded = VerifyToken(token);
+  if (!decoded) {
+    return NextResponse.json({ message: "Invalid token" }, { status: 403 });
+  }
+
+  // Attach user info to request headers
+  req.headers.set("user", JSON.stringify(decoded));
   return NextResponse.next();
 }
 
+// Apply middleware to protected routes
 export const config = {
-  matcher: ["/api/user/:path*"],
+  matcher: ["/api/protected/:path*"], // Apply middleware to API routes that need protection
 };

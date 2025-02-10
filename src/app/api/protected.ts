@@ -1,19 +1,13 @@
-// pages/api/protected.ts
-import { NextApiRequest, NextApiResponse } from "next";
-import { getToken } from "next-auth/jwt";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-const SECRET_KEY = process.env.NEXTAUTH_SECRET || "your-secret-key";
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const user = req.headers["user"];
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const token = await getToken({ req, secret: SECRET_KEY });
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
-  // Token is valid; proceed with your logic
-  res.status(200).json({ message: "Protected route accessed", user: token });
+  return res
+    .status(200)
+    .json({ message: "Protected data", user: JSON.parse(user as string) });
 }
