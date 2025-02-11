@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/db";
 import User from "@/modal/User.Model";
 import mongoose from "mongoose";
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,

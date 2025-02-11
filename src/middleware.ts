@@ -2,9 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { VerifyToken } from "./shared/Constant";
 
 export function middleware(req: NextRequest) {
-  const token =
-    req.cookies.get("token")?.value ||
-    req.headers.get("Authorization")?.split(" ")[1];
+  // Exclude the login route from authentication
+  if (req.nextUrl.pathname === "/api/user/login") {
+    return NextResponse.next();
+  }
+
+  const token = req.headers.get("Authorization")?.split(" ")[1];
 
   if (!token) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -15,12 +18,18 @@ export function middleware(req: NextRequest) {
     return NextResponse.json({ message: "Invalid token" }, { status: 403 });
   }
 
-  // Attach user info to request headers
-  req.headers.set("user", JSON.stringify(decoded));
-  return NextResponse.next();
+  // Create a new request with the modified headers
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("user", JSON.stringify(decoded));
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders, // Pass modified headers
+    },
+  });
 }
 
 // Apply middleware to protected routes
 export const config = {
-  matcher: ["/api/protected/:path*"], // Apply middleware to API routes that need protection
+  matcher: ["/api/user/:path*"], // Apply middleware to /api/user/:id but NOT to /api/user/login
 };
