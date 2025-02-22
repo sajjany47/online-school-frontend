@@ -10,32 +10,36 @@ export const GET = async (
   await dbConnect();
 
   try {
-    const { id } = await params;
+    console.log("API called");
 
-    if (!id) {
+    const { id } = params; // ✅ Fix: No need to await params
+    console.log("User ID:", id);
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
-        { success: false, error: "User ID is required" },
+        { success: false, error: "Invalid or missing User ID" },
         { status: 400 }
       );
     }
-    const userDetails = await User.findOne({
-      _id: new mongoose.Types.ObjectId(id),
-    });
-    if (userDetails) {
-      return NextResponse.json(
-        {
-          success: true,
-          data: userDetails,
-        },
-        { status: 200 }
-      );
-    } else {
+
+    const userDetails = await User.findById(id); // ✅ Fix: Use `findById`
+
+    if (!userDetails) {
       return NextResponse.json(
         { success: false, error: "User not found" },
         { status: 404 }
       );
     }
-  } catch (error) {
-    return NextResponse.json({ success: false, error: error }, { status: 500 });
+
+    return NextResponse.json(
+      { success: true, data: userDetails },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("Error fetching user:", error);
+    return NextResponse.json(
+      { success: false, error: error.message || "Internal Server Error" },
+      { status: 500 }
+    );
   }
 };

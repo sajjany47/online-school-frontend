@@ -1,25 +1,34 @@
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
-import { SecretKey } from "./shared/Constant";
-
-const SECRET_KEY = SecretKey;
-
-// Paths that require token validation
-const protectedPaths = ["/api/user/:id"];
+import { VerifyToken } from "./shared/Constant";
 
 export async function middleware(req: NextRequest) {
-  if (protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
-    const token = await getToken({ req, secret: SECRET_KEY });
-    console.log("Token:", token); // Debugging line
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Define protected API routes
+  const protectedRoutes: string[] = [];
+
+  if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
+    const authHeader = req.headers.get("authorization");
+
+    if (!authHeader) {
+      return NextResponse.json(
+        { message: "Unauthorized - No token provided" },
+        { status: 401 }
+      );
+    }
+
+    try {
+      const token = authHeader.split(" ")[1];
+      const decoded = await VerifyToken(token);
+
+      return NextResponse.json({ message: "Protected data", user: decoded });
+    } catch (error: any) {
+      console.log(error);
+      return NextResponse.json(
+        { message: "Invalid or expired token" },
+        { status: 401 }
+      );
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.next(); // Allow all other routes without validation
 }
-
-export const config = {
-  matcher: ["/api/user/:id"],
-};

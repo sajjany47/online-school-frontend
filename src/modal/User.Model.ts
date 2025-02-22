@@ -178,6 +178,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("user", userSchema);
+// ✅ Check if the model exists before defining it
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
