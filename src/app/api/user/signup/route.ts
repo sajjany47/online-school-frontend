@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db";
 import { GenerateEmployeeId } from "@/lib/utils";
-import User from "@/modal/User.Model";
+import User from "@/modal/Users.Model";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";

@@ -54,22 +54,10 @@ const userSchema = new mongoose.Schema(
           position: { type: String },
           startingYear: { type: String, trim: true },
           endingYear: { type: String, trim: true },
-          experienceLetter: {
-            type: String || null,
-            default: null,
-          },
-          relievingLetter: {
-            type: String || null,
-            default: null,
-          },
-          appointmentLetter: {
-            type: String || null,
-            default: null,
-          },
-          salarySlip: {
-            type: String || null,
-            default: null,
-          },
+          experienceLetter: { type: String, default: null },
+          relievingLetter: { type: String, default: null },
+          appointmentLetter: { type: String, default: null },
+          salarySlip: { type: String, default: null },
         },
       ],
     },
@@ -79,10 +67,7 @@ const userSchema = new mongoose.Schema(
         boardName: { type: String },
         passingYear: { type: String, trim: true },
         marksPercentage: { type: String, trim: true },
-        certificate: {
-          type: String || null,
-          default: null,
-        },
+        certificate: { type: String, default: null },
       },
     ],
     employmentType: {
@@ -121,7 +106,7 @@ const userSchema = new mongoose.Schema(
       ],
       default: Config.Status.PENDING,
     },
-    sessionId: { type: String || null, default: null },
+    sessionId: { type: String, default: null },
     isActive: Boolean,
     createdBy: mongoose.Schema.Types.ObjectId,
     updatedBy: mongoose.Schema.Types.ObjectId,
@@ -178,7 +163,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// ✅ Check if the model exists before defining it
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

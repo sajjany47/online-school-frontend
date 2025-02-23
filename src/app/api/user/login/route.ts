@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { GenerateAccessToken, GenerateRefreshToken } from "@/shared/Constant";
 import mongoose from "mongoose";
 import { NewUser } from "@/types/UserType";
-import User from "@/modal/User.Model";
+import User from "@/modal/Users.Model";
 
 export const POST = async (req: NextRequest) => {
   await dbConnect();

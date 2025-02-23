@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import ApiError from "./ApiError";
-import User from "@/modal/User.Model";
+import User from "@/modal/Users.Model";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/db";
 

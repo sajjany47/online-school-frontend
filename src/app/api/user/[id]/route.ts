@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db";
-import User from "@/modal/User.Model";
+import User from "@/modal/Users.Model";
 import mongoose from "mongoose";
 import { NextResponse, NextRequest } from "next/server";
 

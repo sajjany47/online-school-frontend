@@ -6,8 +6,9 @@ import { ErrorToast } from "@/app/_component/Toast";
 
 const PersonalInfo = () => {
   const user = useSelector((state: any) => state.user.user);
+  console.log(user);
   useEffect(() => {
-    userDetails(user._id)
+    userDetails(user.data._id)
       .then((res) => {
         console.log(res);
       })
