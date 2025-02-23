@@ -8,23 +8,29 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const reqData = await req.json();
-    if (reqData._id) {
-      const userDetails = await User.findById(
-        new mongoose.Types.ObjectId(reqData._id)
-      ); // ✅ Fix: Use `findById`
 
-      if (!userDetails) {
-        return NextResponse.json(
-          { success: false, error: "User not found" },
-          { status: 404 }
-        );
-      }
-
+    if (!reqData._id) {
       return NextResponse.json(
-        { success: true, data: userDetails },
-        { status: 200 }
+        { success: false, error: "User ID is required" },
+        { status: 400 }
       );
     }
+
+    const userDetails = await User.findById(
+      new mongoose.Types.ObjectId(reqData._id)
+    );
+
+    if (!userDetails) {
+      return NextResponse.json(
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, data: userDetails },
+      { status: 200 }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },
