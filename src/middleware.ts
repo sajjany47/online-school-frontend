@@ -4,7 +4,7 @@ import { VerifyToken } from "./shared/Constant";
 
 export async function middleware(req: NextRequest) {
   // Define protected API routes
-  const protectedRoutes: string[] = [];
+  const protectedRoutes: string[] = ["/api/user/:id"];
 
   if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
     const authHeader = req.headers.get("authorization");
@@ -18,6 +18,7 @@ export async function middleware(req: NextRequest) {
 
     try {
       const token = authHeader.split(" ")[1];
+      console.log(token);
       const decoded = await VerifyToken(token);
 
       return NextResponse.json({ message: "Protected data", user: decoded });

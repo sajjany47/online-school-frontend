@@ -6,13 +6,13 @@ import { ErrorToast } from "@/app/_component/Toast";
 
 const PersonalInfo = () => {
   const user = useSelector((state: any) => state.user.user);
-  const [data, setData] = useState({});
+  const [data, setData] = useState<any>({});
 
   useEffect(() => {
     userDetails(user.data._id)
       .then((res) => {
         setData(res.data);
-        console.log(res);
+        console.log(data);
       })
       .catch((err) => {
         ErrorToast(err.response.data.error ?? err.message);
