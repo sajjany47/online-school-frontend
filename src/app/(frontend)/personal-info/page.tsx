@@ -1,15 +1,17 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { userDetails } from "@/service/UserService";
 import { useSelector } from "react-redux";
 import { ErrorToast } from "@/app/_component/Toast";
 
 const PersonalInfo = () => {
   const user = useSelector((state: any) => state.user.user);
-  console.log(user);
+  const [data, setData] = useState({});
+
   useEffect(() => {
     userDetails(user.data._id)
       .then((res) => {
+        setData(res.data);
         console.log(res);
       })
       .catch((err) => {

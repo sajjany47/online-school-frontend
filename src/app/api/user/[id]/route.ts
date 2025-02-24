@@ -10,19 +10,16 @@ export const GET = async (
   await dbConnect();
 
   try {
-    console.log("API called");
+    const { id } = await params;
 
-    const { id } = params; // ✅ Fix: No need to await params
-    console.log("User ID:", id);
-
-    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    if (!id) {
       return NextResponse.json(
-        { success: false, error: "Invalid or missing User ID" },
+        { success: false, error: "User ID is required" },
         { status: 400 }
       );
     }
 
-    const userDetails = await User.findById(id); // ✅ Fix: Use `findById`
+    const userDetails = await User.findById(new mongoose.Types.ObjectId(id));
 
     if (!userDetails) {
       return NextResponse.json(

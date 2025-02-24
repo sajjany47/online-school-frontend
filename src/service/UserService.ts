@@ -19,16 +19,16 @@ export const userLogin = async (payload: any) => {
   return response.data;
 };
 
-// export const userDetails = async (payload: any) => {
-//   const response = await axios.get(`/api/user/${payload}`, headerWithToken());
-//   return response.data;
-// };
-
 export const userDetails = async (payload: any) => {
-  const response = await axios.post(
-    `/api/user/details`,
-    payload,
-    headerWithToken()
-  );
+  const response = await axios.get(`/api/user/${payload}`, headerWithToken());
   return response.data;
 };
+
+// export const userDetails = async (payload: any) => {
+//   const response = await axios.post(
+//     `/api/user/details`,
+//     payload,
+//     headerWithToken()
+//   );
+//   return response.data;
+// };
