@@ -1,35 +1,42 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { VerifyToken } from "./shared/Constant";
+import jwt from "jsonwebtoken";
+import { SecretKey } from "./shared/Constant";
 
 export async function middleware(req: NextRequest) {
-  // Define protected API routes
-  const protectedRoutes: string[] = ["/api/user/:id"];
+  const { pathname } = req.nextUrl;
+  if (pathname === "/api/user/login") {
+    return NextResponse.next();
+  }
 
-  if (protectedRoutes.some((route) => req.nextUrl.pathname.startsWith(route))) {
-    const authHeader = req.headers.get("authorization");
+  const authHeader = req.headers.get("authorization");
 
-    if (!authHeader) {
-      return NextResponse.json(
-        { message: "Unauthorized - No token provided" },
-        { status: 401 }
-      );
-    }
+  if (!authHeader) {
+    return NextResponse.json(
+      { message: "Unauthorized - No token provided" },
+      { status: 401 }
+    );
+  }
 
-    try {
-      const token = authHeader.split(" ")[1];
-      console.log(token);
-      const decoded = await VerifyToken(token);
-
-      return NextResponse.json({ message: "Protected data", user: decoded });
-    } catch (error: any) {
-      console.log(error);
-      return NextResponse.json(
-        { message: "Invalid or expired token" },
-        { status: 401 }
-      );
-    }
+  try {
+    const token = authHeader.replace("Bearer ", "").trim();
+    console.log(token);
+    const decoded = jwt.verify(token, SecretKey);
+    console.log("decoded===>", decoded);
+    req.user = decoded; // Attach user data for further use
+    return NextResponse.next();
+  } catch (error: any) {
+    console.log(error);
+    return NextResponse.json(
+      { message: "Invalid or expired token" },
+      { status: 401 }
+    );
   }
 
   return NextResponse.next(); // Allow all other routes without validation
 }
+
+// ✅ Apply middleware only to `/api/*` routes
+export const config = {
+  matcher: "/api/:path*",
+};
