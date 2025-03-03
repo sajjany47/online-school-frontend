@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
-import { SecretKey } from "./shared/Constant";
+import { jwtVerify } from "jose"; // ✅ Use jose for Edge compatibility
+import { SecretKey } from "./shared/Constant"; 
 
 export async function middleware(req: NextRequest) {
+  const UnProtectedRoutes = ["/api/user/login"];
   const { pathname } = req.nextUrl;
-  if (pathname === "/api/user/login") {
-    return NextResponse.next();
-  }
+  UnProtectedRoutes.forEach(element => {
+    if (pathname === element) {
+      return NextResponse.next();
+    }
+  });
+ 
 
   const authHeader = req.headers.get("authorization");
-
   if (!authHeader) {
     return NextResponse.json(
       { message: "Unauthorized - No token provided" },
@@ -19,21 +22,25 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const token:any = req.headers.get('authorization')?.split(' ')[1];
-    console.log(token);
-    const decoded = jwt.verify(token, SecretKey);
-    console.log("decoded===>", decoded);
-    req.user = decoded; // Attach user data for further use
+   
+    const token = authHeader.split(" ")[1]; // Extract token from header
+
+    // ✅ Convert secret key to Uint8Array
+    const secret = new TextEncoder().encode(SecretKey);
+
+    // ✅ Verify token using `jose`
+    const { payload } = await jwtVerify(token, secret);
+req.user=payload
+
+    // Middleware cannot modify `req`, so pass data via headers or cookies if needed
     return NextResponse.next();
-  } catch (error: any) {
-    console.log(error);
+  } catch (error) {
+    console.error("Token verification failed:", error);
     return NextResponse.json(
       { message: "Invalid or expired token" },
       { status: 401 }
     );
   }
-
-  return NextResponse.next(); // Allow all other routes without validation
 }
 
 // ✅ Apply middleware only to `/api/*` routes

@@ -3,6 +3,7 @@ import ApiError from "./ApiError";
 import User from "@/modal/Users.Model";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/db";
+import { SignJWT } from "jose";
 
 export const SecretKey =
   process.env.SECRET_KEY || "agfnsdfhgsjdfbvjdjhxncbdsfcjdstdsh763543nfgeurt";
@@ -22,37 +23,35 @@ export const getAccessToken = () => {
   return sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
 };
 
-export const GenerateAccessToken = (data: TokenData) => {
-  const a = {
+const secret = new TextEncoder().encode(SecretKey);
+
+export const GenerateAccessToken = async (data: TokenData) => {
+  return await new SignJWT({
     _id: data._id,
     username: data.username,
     name: data.name,
     position: data.position,
     sessionId: data.sessionId,
-  };
-  const accessToken = jwt.sign(a, SecretKey, {
-    expiresIn: "1h",
-    // expiresIn: "10s",
-  });
-
-  return accessToken;
+  })
+    .setProtectedHeader({ alg: "HS256" }) // Algorithm for HMAC
+    .setExpirationTime("1h") // Expiration time
+    .sign(secret);
 };
 
-export const GenerateRefreshToken = (data: TokenData) => {
-  const a = {
+// 🔹 Generate Refresh Token (6 Hours Expiry)
+export const GenerateRefreshToken = async (data: TokenData) => {
+  return await new SignJWT({
     _id: data._id,
     username: data.username,
     position: data.position,
     name: data.name,
     sessionId: data.sessionId,
-  };
-  const refreshToken = jwt.sign(a, SecretKey, {
-    expiresIn: "6h",
-    // expiresIn: "15s",
-  });
-
-  return refreshToken;
+  })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("6h")
+    .sign(secret);
 };
+
 
 export const VerifyToken = async (token: string) => {
   await dbConnect();

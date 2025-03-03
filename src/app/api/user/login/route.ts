@@ -61,8 +61,11 @@ export const POST = async (req: NextRequest) => {
       sessionId: sessionID,
       userImage: checkUser.userImage ?? null,
     };
-    const accessToken = GenerateAccessToken(data);
-    const refreshToken = GenerateRefreshToken(data);
+    const accessToken =await GenerateAccessToken(data);
+    const refreshToken =await GenerateRefreshToken(data);
+
+    console.log("acccessToken===>", accessToken);
+    console.log("refreshToken===>", refreshToken);
 
     await User.updateOne(
       { _id: new mongoose.Types.ObjectId(checkUser._id) },
