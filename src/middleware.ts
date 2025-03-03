@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const token = authHeader.replace("Bearer ", "").trim();
+    const token:any = req.headers.get('authorization')?.split(' ')[1];
     console.log(token);
     const decoded = jwt.verify(token, SecretKey);
     console.log("decoded===>", decoded);
